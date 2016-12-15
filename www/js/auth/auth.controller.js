@@ -1,12 +1,17 @@
 var auth = angular.module("auth");
 
-auth.controller('LoginCtrl', function ($scope) {
+auth.controller('LoginCtrl', function ($scope, Auth, $state) {
 
-    auth.$signInWidthPopup("google")
-        .then(function(firebaseUser){
+   $scope.connectGoogle = function(){
+       Auth.$signInWithPopup("google")
+           .then(function(firebaseUser){
 
-    }).catch(function(error){
-        console.log("Authetication failed :", error);
-    });
+               $state.go('chatList');
+
+           }).catch(function(error){
+           console.log("Authentication failed :", error);
+       });
+   }
+
 
 });
