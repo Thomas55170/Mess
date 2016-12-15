@@ -33,16 +33,43 @@
     <script src="lib/firebase/firebase.js"></script>
     <script src="lib/angularfire/dist/angularfire.js"></script>
 
+    <!-- Initialize the Firebase SDK -->
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAeFjkv_uEJzi_h5vkeA-uGX1p4KQ2yNKw",
+            authDomain: "mess-fccf4.firebaseapp.com",
+            databaseURL: "https://mess-fccf4.firebaseio.com",
+            storageBucket: "mess-fccf4.appspot.com",
+            messagingSenderId: "535472369224"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <!-- AUTH -->
+    <script src="js/auth/auth.module.js"></script>
+    <script src="js/auth/auth.controller.js"></script>
+    <script src="js/auth/auth.route.js"></script>
+    <script src="js/auth/auth.service.js"></script>
+
+    <!-- CHAT -->
+    <script src="js/chat/chat.module.js"></script>
+    <script src="js/chat/chat.controller.js"></script>
+    <script src="js/chat/chat.route.js"></script>
+    <script src="js/chat/chat.service.js"></script>
+    <script src="js/chat/chat.directive.js"></script>
+
     <!-- your app's js -->
-    <script src="js/app.js"></script>
+    <script src="js/app.module.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="app">
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
         <h1 class="title">Ionic Blank Starter</h1>
       </ion-header-bar>
       <ion-content>
+        <div ui-view></div>
       </ion-content>
     </ion-pane>
   </body>
