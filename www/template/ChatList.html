@@ -1,17 +1,21 @@
 <div>
 
-    <div id="list">
-        <p>Search: <input ng-model="searchText"></p>
-        <ion-list class="chatbox">
-            <!-- arrays are fully sortable and filterable -->
-            <ion-item ui-sref="chatMessage({id: conversation.$id})" ng-repeat="conversation in conversations | orderBy:orderBy | filter:searchText">
-                {{ conversation.name }}: {{ conversation.nameCreator }}
-            </ion-item>
-        </ion-list>
+    <p class="searchChat col">Search: <input ng-model="searchText"></p>
+    <div id="list" class="row">
+        <div class="col">
+            <ion-list class="chatbox">
+                <ion-item>Nom conversation: Nom du créateur</ion-item>
+                <!-- arrays are fully sortable and filterable -->
+                <ion-item class="hoverChat" ui-sref="chatMessage({id: conversation.$id})" ng-repeat="conversation in conversations | orderBy:orderBy | filter:searchText">
+                    {{ conversation.name }}: {{ conversation.nameCreator }}
+                    <a href="" class="ion-ios-close-outline" ng-click="conversations.$remove(conversation)"></a>
+                </ion-item>
+            </ion-list>
+        </div>
     </div>
 
     <div>
-        <button ng-click="modal.show()" class="ion-ios-plus-outline"></button>
+        <button ng-click="modal.show()" class="button ion-ios-plus-outline"></button>
     </div>
 
 

@@ -1,1 +1,10 @@
 /* Empty. Add your own CSS if you like */
+.searchChat{
+    padding: 2% 2% 2% 2%;
+}
+
+.hoverChat:hover{
+    background-color: #387ef5 !important;
+    color: #387ef5;
+    cursor: pointer;
+}
