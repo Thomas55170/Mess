@@ -1,7 +1,7 @@
 var chat = angular.module("chat");
 
-
-chat.controller('ChatListCtrl', function ($scope, $state, $firebaseArray, chatLists) {
+// LISTE DES CONVERSATIONS
+chat.controller('ChatListCtrl', function ($scope, $state, $firebaseArray, chatLists,$ionicModal, Auth) {
 
     $scope.user = "Guest " + Math.round(Math.random() * 100);
 
@@ -12,19 +12,42 @@ chat.controller('ChatListCtrl', function ($scope, $state, $firebaseArray, chatLi
         if ($scope.conversations.length === 0) {
             $scope.conversations.$add({
                 name: "Test",
-                nameCreator: "Me",
+                nameCreator: Auth.$getAuth().displayName,
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
                 messages: []
             });
         }
     });
 
+    $ionicModal.fromTemplateUrl('template/ModalAdd.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+});
+
+// MODAL
+chat.controller('ConversationCreationCtrl', function($scope, $firebaseArray, chatLists, Auth){
+    $scope.conversations = chatLists;
+
+
+    $scope.addConversation = function(){
+
+        $scope.conversations.$add({
+            name: $scope.name,
+            nameCreator: Auth.$getAuth().displayName,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+    };
+
 
 });
 
-chat.controller('ChatMessageCtrl', function($scope,$state,$stateParams,$firebaseArray, chatMessages){
+// CHATS D'UNE CONVERSATION
+chat.controller('ChatMessageCtrl', function($scope,$state,$stateParams,$firebaseArray, chatMessages, Auth){
 
-    $scope.user = "Guest " + Math.round(Math.random() * 100);
+    //$scope.user = "Guest " + Math.round(Math.random() * 100);
 
     $scope.messages = chatMessages.List($stateParams.id);
 
@@ -33,7 +56,7 @@ chat.controller('ChatMessageCtrl', function($scope,$state,$stateParams,$firebase
         console.log('user',$scope.user);
         console.log('message',$scope.message);
         $scope.messages.$add({
-            from: $scope.user,
+            from: Auth.$getAuth().displayName,
             content: $scope.message,
             timestamp: firebase.database.ServerValue.TIMESTAMP
         });
@@ -46,7 +69,7 @@ chat.controller('ChatMessageCtrl', function($scope,$state,$stateParams,$firebase
 
         if ($scope.messages.length === 0) {
             $scope.messages.$add({
-                from: "Uri",
+                from: Auth.$getAuth().displayName,
                 content: "Hello!",
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
@@ -54,28 +77,19 @@ chat.controller('ChatMessageCtrl', function($scope,$state,$stateParams,$firebase
     });
 
 });
+/*
+chat.controller('ChatManagerCtrl', function($scope, chatManager, $stateParams, Auth){
+   var chatManager = new chatManager($stateParams.id);
+   var currentUser = Auth.$getAuth();
 
-chat.controller('AddChatModalCtrl', function ($scope, $ionicModal) {
+   chatManager.addMemberIfNotExists(currentUser);
+   $scope.chat = chatManager.getChat();
+   //$scope.members = chatManager.getMembers();
 
-    $ionicModal.fromTemplateUrl('templates/ModalAdd.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
-    });
-   /* $scope.openModal = function() {
-        $scope.modal.show();
-    };*/
+   $scope.messages = chatManager.getMessages();
 
-    /*$scope.createContact = function(u) {
-        $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
-        $scope.modal.hide();
-    };*/
-
-    /*$ionicModal.fromTemplateUrl('modal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) { $scope.modal = modal; });*/
+   //Gestion du formulaire d'ajout de message
+    // A Faire
 
 
-});
+});*/

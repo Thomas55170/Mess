@@ -1,6 +1,6 @@
-var chat = angular.module("auth");
+var chat = angular.module("chat");
 
-auth.config(function($stateProvider, $urlRouterProvider) {
+chat.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
