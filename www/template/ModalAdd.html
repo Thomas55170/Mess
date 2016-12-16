@@ -1,0 +1,15 @@
+<ion-modal-view ng-controller="AddChatModalCtrl">
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Nouveau contact</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Annuler</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Titre</span>
+                <input ng-model="newConversation.Name" type="text">
+            </label>
+            <button class="button button-full button-positive" ng-click="createContact(newConversation)">Créer</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

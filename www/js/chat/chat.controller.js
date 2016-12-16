@@ -1,5 +1,6 @@
 var chat = angular.module("chat");
 
+
 chat.controller('ChatListCtrl', function ($scope, $state, $firebaseArray, chatLists) {
 
     $scope.user = "Guest " + Math.round(Math.random() * 100);
@@ -12,31 +13,25 @@ chat.controller('ChatListCtrl', function ($scope, $state, $firebaseArray, chatLi
             $scope.conversations.$add({
                 name: "Test",
                 nameCreator: "Me",
-                timestamp: firebase.database.ServerValue.TIMESTAMP
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                messages: []
             });
         }
     });
 
+
 });
 
-chat.controller('ChartMessageCtrl', function($scope,$state,$firebaseArray, chatMessages){
-
-    /*var messagesRef = firebase.database().ref().child("messages");
-     // download the data from a Firebase reference into a (pseudo read-only) array
-     // all server changes are applied in realtime
-     $scope.messages = $firebaseArray(messagesRef);
-     // create a query for the most recent 25 messages on the server
-     var query = messagesRef.orderByChild("timestamp").limitToLast(25);
-     // the $firebaseArray service properly handles database queries as well
-     $scope.filteredMessages = $firebaseArray(query);*/
-
+chat.controller('ChatMessageCtrl', function($scope,$state,$stateParams,$firebaseArray, chatMessages){
 
     $scope.user = "Guest " + Math.round(Math.random() * 100);
 
-    $scope.messages = chatMessages;
+    $scope.messages = chatMessages.List($stateParams.id);
 
     $scope.addMessage = function() {
         // $add on a synchronized array is like Array.push() except it saves to the database!
+        console.log('user',$scope.user);
+        console.log('message',$scope.message);
         $scope.messages.$add({
             from: $scope.user,
             content: $scope.message,
@@ -48,6 +43,7 @@ chat.controller('ChartMessageCtrl', function($scope,$state,$firebaseArray, chatM
 
     // if the messages are empty, add something for fun!
     $scope.messages.$loaded(function() {
+
         if ($scope.messages.length === 0) {
             $scope.messages.$add({
                 from: "Uri",
@@ -56,5 +52,30 @@ chat.controller('ChartMessageCtrl', function($scope,$state,$firebaseArray, chatM
             });
         }
     });
+
+});
+
+chat.controller('AddChatModalCtrl', function ($scope, $ionicModal) {
+
+    $ionicModal.fromTemplateUrl('templates/ModalAdd.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+   /* $scope.openModal = function() {
+        $scope.modal.show();
+    };*/
+
+    /*$scope.createContact = function(u) {
+        $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
+        $scope.modal.hide();
+    };*/
+
+    /*$ionicModal.fromTemplateUrl('modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) { $scope.modal = modal; });*/
+
 
 });
