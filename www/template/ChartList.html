@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des conversations</title>
+</head>
+<body ng-controller="ChartListCtrl">
+
+    <div id="list" ng-model="conversation">
+        <p>Search: <input ng-model="searchText"></p>
+        <ion-list class="chatbox">
+            <!-- arrays are fully sortable and filterable -->
+            <ion-item ng-repeat="conversation in conversations | orderBy:orderBy | filter:searchText">
+                {{ conversation.name }}: {{ conversation.nameCreator }}
+            </ion-item>
+        </ion-list>
+    </div>
+
+</body>
+</html>

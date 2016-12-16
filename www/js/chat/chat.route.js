@@ -6,7 +6,7 @@ auth.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state("chatList", {
             url: "/chatList",
-            //templateUrl : "template/main.html",
+            templateUrl : "template/ChartList.html",
             controller: 'ChatListCtrl',
             resolve: {
                 // controller will not be loaded until $waitForSignIn resolves
